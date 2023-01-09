@@ -11,6 +11,23 @@
   </head>
 
   <body>
+  <div id="container">
+    <div id="user_nav">
+      <% if tenant_signed_in? %>
+        Logged in as <strong><%= current_tenant.email %></strong>.
+        <%= link_to 'Edit profile', edit_tenant_registration_path %> |
+        <%= button_to "Logout", destroy_tenant_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign up", new_tenant_registration_path %> |
+        <%= link_to "Login", new_tenant_session_path %>
+      <% end %>
+    </div>
+
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, id: "flash_#{name}" %>
+    <% end %>
+
     <%= yield %>
+  </div>
   </body>
 </html>
