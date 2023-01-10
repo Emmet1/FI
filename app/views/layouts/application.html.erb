@@ -14,12 +14,24 @@
   <div id="container">
     <div id="user_nav">
       <% if tenant_signed_in? %>
-        Logged in as <strong><%= current_tenant.email %></strong>.
+        <h4>Tenant</h4>
+        Logged in as Tenant <strong><%= current_tenant.email %></strong>.
         <%= link_to 'Edit profile', edit_tenant_registration_path %> |
         <%= button_to "Logout", destroy_tenant_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "Sign up", new_tenant_registration_path %> |
-        <%= link_to "Login", new_tenant_session_path %>
+      <% end %>
+
+      <% if landlord_signed_in? %>
+        <h4>Landlord</h4>
+        Logged in as Landlord <strong><%= current_landlord.email %></strong>.
+        | <%= link_to 'Edit profile', edit_landlord_registration_path %> |
+        <%= button_to "Logout", destroy_landlord_session_path, method: :delete %>
+      <% end %>
+
+      <% if !tenant_signed_in? && !landlord_signed_in? %>
+        <%= link_to "Sign up As Tenant", new_tenant_registration_path %> |
+        <%= link_to "Login As Tenant", new_tenant_session_path %>
+        <%= link_to "Sign up As Landlord", new_landlord_registration_path %> |
+        <%= link_to "Login As Landlord", new_landlord_session_path %>
       <% end %>
     </div>
 
