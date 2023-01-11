@@ -2,12 +2,22 @@
 
 <h1>Listings</h1>
 
+<%= form_tag '/listings', method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag :search %>
+<% end %>
+
+<%= link_to 'Reset Search', listings_path %>
+
 <div id="listings">
   <% @listings.each do |listing| %>
     <%= render listing %>
     <p>
-      <%= link_to "Show this listing", listing %>
+      <% if landlord_signed_in? && current_landlord == listing.landlord %>
+        <%= link_to "Manage this listing", listing %>
+      <% end %>
     </p>
+    <hr />
   <% end %>
 </div>
 

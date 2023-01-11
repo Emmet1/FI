@@ -4,7 +4,11 @@ class ListingsController < ApplicationController
 
   # GET /listings or /listings.json
   def index
-    @listings = Listing.all
+    @listings = if params[:search].present?
+      Listing.search(params[:search])
+    else
+      Listing.all
+    end
   end
 
   # GET /listings/1 or /listings/1.json
