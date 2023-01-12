@@ -26,10 +26,14 @@ class ListingsController < ApplicationController
 
   # POST /listings or /listings.json
   def create
-    @listing = current_landlord.listings.new(listing_params)
+    @listing = current_landlord.listings.new(listing_params.except(:image))
 
     respond_to do |format|
       if @listing.save
+        if listing_params[:image].present?
+          response = Cloudinary::Uploader.upload(listing_params[:image])
+          @listing.update!(image_url: response['url'])
+        end
         format.html { redirect_to listing_url(@listing), notice: "Listing was successfully created." }
         format.json { render :show, status: :created, location: @listing }
       else
@@ -42,7 +46,11 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1 or /listings/1.json
   def update
     respond_to do |format|
-      if @listing.update(listing_params)
+      if @listing.update(listing_params.except(:image))
+        if listing_params[:image].present?
+          response = Cloudinary::Uploader.upload(listing_params[:image])
+          @listing.update!(image_url: response['url'])
+        end
         format.html { redirect_to listing_url(@listing), notice: "Listing was successfully updated." }
         format.json { render :show, status: :ok, location: @listing }
       else
@@ -70,6 +78,6 @@ class ListingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def listing_params
-      params.require(:listing).permit(:title, :description, :location, :landlord_id)
+      params.require(:listing).permit(:title, :description, :location, :landlord_id, :image)
     end
 end

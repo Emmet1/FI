@@ -13,4 +13,8 @@
     <strong>Location:</strong>
     <%= listing.location %>
   </p>
+
+  <p>
+    <%= image_tag listing.image_url if listing.image_url.present? %>
+  </p>
 </div>
