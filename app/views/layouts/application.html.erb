@@ -13,6 +13,8 @@
   <body>
   <div id="container">
     <div id="user_nav">
+      <%= render 'shared/navbar' %>
+
       <% if tenant_signed_in? %>
         <h4>Tenant</h4>
         Logged in as Tenant <strong><%= current_tenant.email %></strong>.

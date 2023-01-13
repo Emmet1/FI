@@ -2,12 +2,16 @@
 
 <h1>Listings</h1>
 
-<%= form_tag '/listings', method: :get do %>
-  <%= text_field_tag :search, params[:search] %>
-  <%= submit_tag :search %>
+<%= form_tag '/listings', method: :get, class: "form-inline my-2 my-lg-0" do %>
+  <%= text_field_tag :search, params[:search], class: "form-control mr-sm-2" %>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 <% end %>
 
-<%= link_to 'Reset Search', listings_path %>
+<%= link_to 'Reset Search', listings_path, class: 'btn btn-primary' %> |
+
+<% if landlord_signed_in? %>
+  <%= link_to "New listing", new_listing_path, class: 'btn btn-success' %>
+<% end %>
 
 <div id="listings">
   <% @listings.each do |listing| %>
@@ -20,7 +24,3 @@
     <hr />
   <% end %>
 </div>
-
-<% if landlord_signed_in? %>
-  <%= link_to "New listing", new_listing_path %>
-<% end %>
