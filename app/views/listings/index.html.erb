@@ -23,9 +23,7 @@
   <% @listings.each do |listing| %>
     <%= render listing %>
     <p>
-      <% if landlord_signed_in? && current_landlord == listing.landlord %>
-        <%= link_to "Manage this listing", listing %>
-      <% end %>
+
     </p>
     <hr />
   <% end %>

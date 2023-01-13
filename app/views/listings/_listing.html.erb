@@ -1,11 +1,11 @@
-<div id="<%= dom_id listing %>">
-  <p>
-    <strong>Title:</strong>
-    <%= listing.title %>
-  </p>
+<div id="<%= dom_id listing %>" class="card m-2">
+  <%= image_tag listing.image_url,class:"card-img-top"  if listing.image_url.present?  %>
+<div class="card-body">
 
+  <h3><%= listing.title %>
+  </h3>
   <p>
-    <strong>Description:</strong>
+    <strong>About:</strong>
     <%= listing.description %>
   </p>
 
@@ -14,7 +14,9 @@
     <%= listing.location %>
   </p>
 
-  <p>
-    <%= image_tag listing.image_url if listing.image_url.present? %>
-  </p>
+
+  <% if landlord_signed_in? && current_landlord == listing.landlord %>
+    <%= link_to "Manage this listing", listing %>
+  <% end %>
+</div>
 </div>
